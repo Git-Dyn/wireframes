@@ -190,7 +190,7 @@
             position: absolute;
             top: 4px;
             left: 4px;
-            width: calc(50% - 4px);
+            width: calc(33.333% - 4px);
             height: calc(100% - 8px);
             background: var(--accent);
             border-radius: 100px;
@@ -198,7 +198,8 @@
             box-shadow: 0 2px 12px rgba(239,68,68,0.3);
         }
 
-        .toggle-pill.right { transform: translateX(100%); }
+        .toggle-pill.center { transform: translateX(100%); }
+        .toggle-pill.right { transform: translateX(200%); }
 
         .toggle-btn {
             padding: 10px 28px;
@@ -297,6 +298,83 @@
             box-shadow:
                 0 0 0 1px rgba(255,255,255,0.04),
                 0 4px 12px rgba(0,0,0,0.4);
+        }
+
+        /* ── TABLET (iPad) ── */
+        .tablet-wrap {
+            transform: scale(0.72);
+            transform-origin: top center;
+        }
+
+        .tablet {
+            position: relative;
+            background: linear-gradient(160deg, #3a3a3c 0%, #1c1c1e 40%);
+            border-radius: 24px;
+            padding: 16px;
+            box-shadow:
+                0 0 0 1px rgba(255,255,255,0.08),
+                inset 0 1px 0 rgba(255,255,255,0.06),
+                0 30px 80px rgba(0,0,0,0.6),
+                0 0 100px rgba(239,68,68,0.03);
+        }
+
+        .tablet-camera {
+            position: absolute;
+            top: 50%;
+            left: 7px;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #48484a;
+            box-shadow: inset 0 0 2px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+
+        .tablet-screen {
+            width: 820px;
+            height: 580px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+            position: relative;
+        }
+
+        .tablet-screen iframe {
+            width: 820px;
+            height: 1180px;
+            border: none;
+            display: block;
+        }
+
+        .tablet-btn-power {
+            position: absolute;
+            top: -2px;
+            right: 80px;
+            width: 52px;
+            height: 3px;
+            background: linear-gradient(90deg, #3a3a3c, #2c2c2e);
+            border-radius: 2px 2px 0 0;
+        }
+
+        .tablet-btn-vol1 {
+            position: absolute;
+            right: -2px;
+            top: 80px;
+            width: 3px;
+            height: 40px;
+            background: linear-gradient(180deg, #3a3a3c, #2c2c2e);
+            border-radius: 0 2px 2px 0;
+        }
+
+        .tablet-btn-vol2 {
+            position: absolute;
+            right: -2px;
+            top: 128px;
+            width: 3px;
+            height: 40px;
+            background: linear-gradient(180deg, #3a3a3c, #2c2c2e);
+            border-radius: 0 2px 2px 0;
         }
 
         /* ── PHONE ── */
@@ -399,6 +477,7 @@
 
         /* ── Reflection shimmer on devices ── */
         .monitor-screen::after,
+        .tablet-screen::after,
         .phone-screen::after {
             content: '';
             position: absolute;
@@ -415,6 +494,7 @@
         }
 
         .monitor-screen { position: relative; }
+        .tablet-screen { position: relative; }
         .phone-screen { position: relative; }
 
         /* ── URGENCY ── */
@@ -534,6 +614,7 @@
             .monitor-screen iframe {
                 transform: scale(0.5);
             }
+            .tablet-wrap { transform: scale(0.6); }
         }
 
         @media (max-width: 840px) {
@@ -554,6 +635,7 @@
             .mockup-area { padding: 20px 16px 12px; }
 
             .mockup-view.desktop { display: none !important; }
+            .mockup-view.tablet { display: none !important; }
             .mockup-view.mobile { display: flex !important; }
 
             .phone-wrap {
@@ -631,6 +713,13 @@
                     </svg>
                     Desktop
                 </button>
+                <button class="toggle-btn" data-view="tablet" onclick="switchView('tablet')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="2" width="16" height="20" rx="2"/>
+                        <circle cx="12" cy="18" r="0.5"/>
+                    </svg>
+                    Tablet
+                </button>
                 <button class="toggle-btn" data-view="mobile" onclick="switchView('mobile')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="5" y="2" width="14" height="20" rx="2"/>
@@ -657,6 +746,21 @@
                     </div>
                     <div class="monitor-neck"></div>
                     <div class="monitor-base"></div>
+                </div>
+            </div>
+
+            <!-- Tablet -->
+            <div class="mockup-view tablet" id="viewTablet">
+                <div class="tablet-wrap">
+                    <div class="tablet">
+                        <div class="tablet-camera"></div>
+                        <div class="tablet-screen">
+                            <iframe src="" title="Wireframe Tablet" loading="lazy"></iframe>
+                        </div>
+                        <div class="tablet-btn-power"></div>
+                        <div class="tablet-btn-vol1"></div>
+                        <div class="tablet-btn-vol2"></div>
+                    </div>
                 </div>
             </div>
 
@@ -718,6 +822,7 @@
         var CONFIG = {
             client:      "Espaço Adapte",
             desktop:     "home-preview.html",
+            tablet:      "home-preview.html",
             mobile:      "home-mobile.html",
             meetingUrl:  "#",
             expiryDays:  7
@@ -728,6 +833,7 @@
             document.title = "Prévia Exclusiva · " + CONFIG.client + " · Siena Digital";
             document.getElementById("clientName").textContent = CONFIG.client;
             document.querySelector(".mockup-view.desktop iframe").src = CONFIG.desktop;
+            document.querySelector(".mockup-view.tablet iframe").src = CONFIG.tablet;
             document.querySelector(".mockup-view.mobile iframe").src = CONFIG.mobile;
             document.getElementById("ctaLink").href = CONFIG.meetingUrl;
 
@@ -748,7 +854,9 @@
             var btns = document.querySelectorAll('.toggle-btn');
             var views = document.querySelectorAll('.mockup-view');
 
-            pill.classList.toggle('right', view === 'mobile');
+            pill.classList.remove('center', 'right');
+            if (view === 'tablet') pill.classList.add('center');
+            if (view === 'mobile') pill.classList.add('right');
 
             btns.forEach(function(btn) {
                 btn.classList.toggle('active', btn.getAttribute('data-view') === view);
