@@ -224,10 +224,12 @@
 
         /* ── MOCKUP AREA ── */
         .mockup-area {
-            position: relative;
+            display: flex;
+            justify-content: center;
             padding: 28px 40px 20px;
             opacity: 0;
             animation: fadeUp 1s ease 0.65s forwards;
+            overflow: hidden;
         }
 
         .mockup-view {
@@ -315,6 +317,7 @@
             background: linear-gradient(160deg, #3a3a3c 0%, #1c1c1e 40%);
             border-radius: 18px;
             padding: 12px;
+            width: 704px;
             box-shadow:
                 0 0 0 1px rgba(255,255,255,0.08),
                 inset 0 1px 0 rgba(255,255,255,0.06),
@@ -342,9 +345,13 @@
             overflow: hidden;
             background: #fff;
             position: relative;
+            flex-shrink: 0;
         }
 
         .tablet-screen iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 820px;
             height: 1180px;
             transform: scale(0.8293);
